@@ -1,2 +1,0 @@
-Facial Emotion Detection
-This project implements a facial emotion detection system using Convolutional Neural Networks (CNNs). The model is trained to recognize human emotions from facial expressions in images and real-time video feeds
