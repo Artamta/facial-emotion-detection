@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import config # Import config to get image dimensions
 
 # Define the VGG16 model from scratch
 class VGG16_Scratch(nn.Module):
@@ -69,6 +68,10 @@ class VGG16_Scratch(nn.Module):
         x = self.classifier(x)
         return x
 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import config # Import config to get image dimensions
 
 # Define a Simple CNN model for quick testing
 class SimpleCNN(nn.Module):

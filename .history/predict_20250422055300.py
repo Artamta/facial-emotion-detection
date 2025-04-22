@@ -106,7 +106,7 @@ emotion_predictor_function = run_prediction_on_image
 # Allow running prediction directly (example)
 if __name__ == '__main__':
     # IMPORTANT: Replace with a valid image path from your data/ directory or elsewhere
-    test_img = '/Users/ayush/Desktop/project_ayush_raj/data/' # Example path - CHANGE THIS
+    test_img = '/Users/ayush/Desktop/project_ayush_raj/data/train' # Example path - CHANGE THIS
 
     if not os.path.exists(test_img):
          print(f"Test image '{test_img}' not found. Please provide a valid path.")

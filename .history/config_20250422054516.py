@@ -3,7 +3,7 @@ import torch
 # Training Hyperparameters
 learning_rate = 0.001
 batch_size = 32
-num_epochs = 1 # Or your desired number of epochs
+num_epochs = 10 # Or your desired number of epochs
 
 # Image Configuration
 resize_height = 128
