@@ -1,6 +1,7 @@
 import torch
 import torch.optim as optim
 import torch.nn as nn
+from torch.optim.lr_scheduler import StepLR  # Import the scheduler
 from config import batch_size, epochs, learning_rate, checkpoint_path, num_folds
 from dataset import get_dataloader
 from model import MyCustomModel
@@ -57,6 +58,9 @@ def train_model():
         loss_fn = nn.CrossEntropyLoss()
         optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
         
+        # Initialize the learning rate scheduler
+        scheduler = StepLR(optimizer, step_size=20, gamma=0.1)  # Reduce LR by 10x every 20 epochs
+        
         best_test_acc = 0
         for epoch in range(epochs):
             print(f"\n[DEBUG] Starting epoch {epoch + 1}/{epochs}")
@@ -86,6 +90,10 @@ def train_model():
                 best_test_acc = test_acc
                 torch.save({'net': model.state_dict()}, f"{checkpoint_path}_fold{fold}.pth")
                 print(f"[DEBUG] Model weights saved for fold {fold} to {checkpoint_path}_fold{fold}.pth")
+
+            # Step the scheduler at the end of the epoch
+            scheduler.step()
+            print(f"[DEBUG] Learning rate for next epoch: {scheduler.get_last_lr()}")
 
         print(f"[DEBUG] Training completed for fold {fold}. Best Test Accuracy: {best_test_acc:.2f}%")
         fold_accuracies.append(best_test_acc)
