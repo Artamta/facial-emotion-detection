@@ -6,7 +6,7 @@ from model import MyCustomModel
 # Define the emotion classes
 EMOTION_CLASSES = ['Angry', 'Contempt', 'Disgust', 'Fear', 'Happy', 'Sadness', 'Surprise']
 
-def classify_images(image_paths, model_name='VGG19', checkpoint_path='.checkpoints/final_weights.pth_fold4.pth'):
+def classify_images(image_paths, model_name='VGG19', checkpoint_path='./checkpoints/final_weights.pth4'):
     """
     Classify a list of image paths using the trained model.
 

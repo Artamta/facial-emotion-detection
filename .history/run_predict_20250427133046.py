@@ -1,6 +1,4 @@
 from predict import classify_images
-from PIL import Image
-import matplotlib.pyplot as plt
 
 # List of image paths to classify
 image_paths = [
@@ -14,24 +12,13 @@ image_paths = [
 ]
 
 # Specify the correct checkpoint path
-checkpoint_path = './checkpoints/final_weights.pth_fold4.pth'  # Update this to the correct file
+checkpoint_path = './checkpoints/final_weights.pth_fold1.pth'  # Update this to the correct file
 
 # Run predictions
 try:
     predictions = classify_images(image_paths, model_name='VGG19', checkpoint_path=checkpoint_path)
-    
-    # Display each image with its predicted emotion
     for img_path, pred in zip(image_paths, predictions):
-        # Open the image
-        img = Image.open(img_path)
-        
-        # Display the image and prediction
-        plt.figure()
-        plt.imshow(img, cmap='gray')  # Assuming grayscale images
-        plt.title(f"Predicted Emotion: {pred}")
-        plt.axis('off')  # Hide axes
-        plt.show()
-
+        print(f"Image: {img_path}, Predicted Emotion: {pred}")
 except FileNotFoundError as e:
     print(f"Error: {e}")
 except RuntimeError as e:
