@@ -60,7 +60,7 @@ def classify_images(image_paths, model_name='VGG19', model_path='./checkpoints/f
 if __name__ == "__main__":
     # Example usage: Predict using the model from fold 4
     model_path = './checkpoints/final_weights.pth_fold4.pth'
-    image_paths = [f'./data/img{i:02d}.jpg' for i in range(1, 71)]  # Format as img01.jpg, img02.jpg, ..., img70.jpg
+    image_paths = [f'./data/img{i}.jpg' for i in range(1, 71)]  # 70 images
     predictions = classify_images(image_paths, model_path=model_path)
     for img_path, pred in zip(image_paths, predictions):
         print(f"Image: {img_path}, Predicted Emotion: {pred}")
