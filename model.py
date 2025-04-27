@@ -67,53 +67,19 @@ class BasicBlock(nn.Module):
         out = F.relu(out)
         return out
 
-# ResNet Model
-class ResNet(nn.Module):
-    def __init__(self, block, num_blocks, num_classes=7):
-        super(ResNet, self).__init__()
-        self.in_planes = 64
-
-        # First convolutional layer modified for grayscale input (1 channel)
-        self.conv1 = nn.Conv2d(1, 64, kernel_size=3, stride=1, padding=1, bias=False)
-        self.bn1 = nn.BatchNorm2d(64)
-        self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1)
-        self.layer2 = self._make_layer(block, 128, num_blocks[1], stride=2)
-        self.layer3 = self._make_layer(block, 256, num_blocks[2], stride=2)
-        self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2)
-        self.linear = nn.Linear(512, num_classes)
-
-    def _make_layer(self, block, planes, num_blocks, stride):
-        strides = [stride] + [1] * (num_blocks - 1)
-        layers = []
-        for stride in strides:
-            layers.append(block(self.in_planes, planes, stride))
-            self.in_planes = planes * block.expansion
-        return nn.Sequential(*layers)
-
-    def forward(self, x):
-        out = F.relu(self.bn1(self.conv1(x)))
-        out = self.layer1(out)
-        out = self.layer2(out)
-        out = self.layer3(out)
-        out = self.layer4(out)
-        out = F.avg_pool2d(out, 4)
-        out = out.view(out.size(0), -1)
-        out = F.dropout(out, p=0.5, training=self.training)
-        out = self.linear(out)
-        return out
-
-# ResNet Variants
-def ResNet18(num_classes=7):
-    return ResNet(BasicBlock, [2, 2, 2, 2], num_classes=num_classes)
 
 
-# MyCustomModel Class
-class MyCustomModel:
-    @staticmethod
-    def get_model(model_name, num_classes=7):
+class MyCustomModel(nn.Module):
+    def __init__(self, model_name='VGG19', num_classes=7, dropout_rate=0.5):
+        super(MyCustomModel, self).__init__()
         if model_name == 'VGG19':
-            return VGG('VGG19')
-        elif model_name == 'ResNet18':
-            return ResNet18()
+            self.model = VGG(vgg_name='VGG19')
         else:
             raise ValueError(f"Unsupported model: {model_name}")
+
+    def forward(self, x):
+        return self.model(x)
+
+    @staticmethod
+    def get_model(model_name='VGG19', num_classes=7, dropout_rate=0.5):
+        return MyCustomModel(model_name=model_name, num_classes=num_classes, dropout_rate=dropout_rate)

@@ -4,15 +4,15 @@ from torchvision import transforms
 from model import MyCustomModel
 
 # Define the emotion classes
-EMOTION_CLASSES = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
+EMOTION_CLASSES = ['Angry', 'Contempt', 'Disgust', 'Fear', 'Happy', 'Sadness', 'Surprise']
 
-def classify_images(image_paths, model_name='ResNet18', checkpoint_path='./checkpoints/final_weights.pth'):
+def classify_images(image_paths, model_name='VGG19', checkpoint_path='./checkpoints/final_weights.pth'):
     """
     Classify a list of image paths using the trained model.
 
     Args:
         image_paths (list): List of image file paths to classify.
-        model_name (str): Name of the model to use ('ResNet18').
+        model_name (str): Name of the model to use ('VGG19' or 'ResNet18').
         checkpoint_path (str): Path to the saved model checkpoint.
 
     Returns:
